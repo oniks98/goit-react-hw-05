@@ -1,9 +1,10 @@
 import MovieList from './../../components/MovieList/MovieList';
 
-const HomePage = () => {
+const HomePage = ({ movies }) => {
   return (
     <div>
-      <MovieList />
+      <h1>Trending today</h1>
+      <MovieList movies={movies} />
     </div>
   );
 };

@@ -1,0 +1,30 @@
+.button {
+  padding: 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.button:hover {
+  color: white;
+  background-color: orangered;
+}
+
+.block_dscr {
+  display: flex;
+  gap: 10px;
+}
+
+.dscr {
+  display: flex;
+  flex-direction: column;
+}

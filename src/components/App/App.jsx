@@ -6,31 +6,38 @@ import NotFoundPage from './../../pages/NotFoundPage/NotFoundPage';
 import MovieCast from './../MovieCast/MovieCast';
 import MovieReviews from './../MovieReviews/MovieReviews';
 import AppBar from './../AppBar/AppBar';
-// import fetchMovie from '../../movielist-api.js';
+import fetchTrendingMovies from '../../movielist-api';
+import { useState, useEffect } from 'react';
 import css from './App.module.css';
 
 const App = () => {
-  // const loadImages = async () => {
-  //   try {
-  //     setIsLoading(true);
-  //     setError(null);
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
 
-  //     const data = await fetchImages(query, perPage, page);
-  //   } catch (error) {
-  //     setError(`Unable to load images: ${error.message}`);
-  //   }
+  useEffect(() => {
+    const loadMovies = async () => {
+      try {
+        const data = await fetchTrendingMovies();
+        setMovies(data);
+      } catch (error) {
+        setError(`Unable to load movies: ${error.message}`);
+      }
+    };
 
-  //   loadImages();
-  // };
+    loadMovies();
+  }, []);
 
   return (
     <div className={css.container}>
       <AppBar />
-
+      {error && <p className={css.error}>{error}</p>}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage movies={movies} />} />
         <Route path="/movies" element={<MoviesPage />} />
-        <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+        <Route
+          path="/movies/:movieId"
+          element={<MovieDetailsPage movies={movies} />}
+        >
           <Route path="cast" element={<MovieCast />} />
           <Route path="reviews" element={<MovieReviews />} />
         </Route>

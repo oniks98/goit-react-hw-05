@@ -1,33 +1,18 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// axios.defaults.baseURL = 'https://api.unsplash.com/';
+// const API_KEY = '996fd8b4cfa4566ab6041758d716de26';
 
-// const fetchImages = async (query, perPage, page) => {
-//   const API_KEY = 'knYehEae0WkMN_T4vgmU0_g8gFCAviIMZ5Y6O8W2n3Y';
-//   const response = await axios.get(`search/photos`, {
-//     params: {
-//       query,
-//       client_id: API_KEY,
-//       per_page: perPage,
-//       page,
-//     },
-//   });
+const fetchTrendingMovies = async () => {
+  const API_URL = 'https://api.themoviedb.org/3/trending/movie/day';
+  const response = await axios.get(`${API_URL}`, {
+    headers: {
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5OTZmZDhiNGNmYTQ1NjZhYjYwNDE3NThkNzE2ZGUyNiIsIm5iZiI6MTczNTQ4OTAzMS4yMTI5OTk4LCJzdWIiOiI2NzcxNzYwN2I3MDAxM2NjMGY2MTRjNzMiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.7bmuIIO7f1539c88E4Q_8__R4K372k1m05wpkAgMTqw`,
+    },
+    params: {
+      language: 'en-US',
+    },
+  });
+  return response.data.results;
+};
 
-//   return {
-//     images: response.data.results.map(image => ({
-//       id: image.id,
-//       smallURL: image.urls.small, // Посилання для картки
-//       regularURL: image.urls.regular, // Посилання для модалки
-//       description: image.alt_description || 'No description',
-//       likes: image.likes,
-//       author: {
-//         name: image.user.name,
-//         portfolio: image.user.portfolio_url,
-//         avatar: image.user.profile_image.small,
-//       },
-//     })),
-//     totalPages: response.data.total_pages,
-//   };
-// };
-
-// export { fetchImages };
+export default fetchTrendingMovies;
