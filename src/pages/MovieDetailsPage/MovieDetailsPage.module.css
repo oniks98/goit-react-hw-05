@@ -1,17 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 70px auto;
+  max-width: 1000px;
+  background-color: #f0f0f0;
+}
+
 .button {
-  padding: 8px;
+  padding: 10px;
   border-radius: 4px;
-  text-decoration: none;
   color: black;
   font-weight: 500;
-  margin-bottom: 10px;
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.3s ease;
-}
-
-.link {
-  text-decoration: none;
+  width: 100px;
+  text-align: center;
+  margin-bottom: 10px;
+  /* position: fixed; */
 }
 
 .button:hover {
@@ -21,10 +29,49 @@
 
 .block_dscr {
   display: flex;
-  gap: 10px;
+  gap: 20px;
+  max-width: 1000px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.moviePoster {
+  max-width: 30%;
+  height: auto;
+  border-radius: 8px;
+  min-width: 140px;
 }
 
 .dscr {
   display: flex;
   flex-direction: column;
+  max-width: 70%;
+  gap: 24px;
+}
+
+.nav {
+  display: flex;
+  margin: auto;
+}
+
+.link {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  border: 2px solid orangered;
+  width: 100px;
+}
+
+.active {
+  color: white;
+  background-color: orangered;
+}
+
+.list {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
 }

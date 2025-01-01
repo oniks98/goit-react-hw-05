@@ -1,17 +1,22 @@
-import { useParams, Link, Outlet } from 'react-router-dom';
-
+import { useParams, Link, Outlet, NavLink } from 'react-router-dom';
+import clsx from 'clsx';
 import css from './MovieDetailsPage.module.css';
 
-const MovieDetailsPage = ({ movies }) => {
+const MovieDetailsPage = ({ movies, genres }) => {
+  const buildLinkClass = ({ isActive }) => {
+    return clsx(css.link, isActive && css.active);
+  };
   const { movieId } = useParams();
   const movie = movies.find(movie => movie.id === Number(movieId));
 
-  if (!movie) return;
+  if (!movie) {
+    return <p>Movie not found</p>;
+  }
 
   return (
-    <div>
+    <div className={css.container}>
       <nav className={css.nav}>
-        <Link to="/" className={css.link}>
+        <Link to="/" className={css.link_button}>
           <button type="button" className={css.button}>
             Go back
           </button>
@@ -28,27 +33,48 @@ const MovieDetailsPage = ({ movies }) => {
         )}
         <div className={css.dscr}>
           <h2>
-            {movie.title}({movie.release_date})
+            {movie.title} ({movie.release_date})
           </h2>
           <p>User score: {movie.vote_average}</p>
           <h3>Overview</h3>
           <p>{movie.overview}</p>
           <h3>Genres</h3>
-          <p>{movie.genre_ids}</p>
+          <p>
+            {movie.genre_ids
+              .map(genreId => {
+                const genre = genres.find(genre => genre.id === genreId);
+                return genre ? genre.name : null;
+              })
+              .join(', ')}
+          </p>
         </div>
       </div>
-
       <h3>Additional information</h3>
 
-      <ul>
+      <ul className={css.list}>
         <li>
-          <Link to="cast">Cast</Link>
+          <nav className={css.nav}>
+            <NavLink to="cast" className={buildLinkClass}>
+              Cast
+            </NavLink>
+          </nav>
         </li>
         <li>
-          <Link to="reviews">Reviews</Link>
+          <nav className={css.nav}>
+            <NavLink to="reviews" className={buildLinkClass}>
+              Reviews
+            </NavLink>
+          </nav>
         </li>
       </ul>
       <Outlet />
+      {/* <nav className={css.nav}>
+        <Link to="/" className={css.link_button}>
+          <button type="button" className={css.button}>
+            Go back
+          </button>
+        </Link>
+      </nav> */}
     </div>
   );
 };
