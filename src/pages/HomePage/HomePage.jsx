@@ -3,7 +3,7 @@ import css from './HomePage.module.css';
 
 const HomePage = ({ movies }) => {
   return (
-    <div>
+    <div className={css.container}>
       <h1 className={css.title}>Trending today</h1>
       <MovieList movies={movies} />
     </div>

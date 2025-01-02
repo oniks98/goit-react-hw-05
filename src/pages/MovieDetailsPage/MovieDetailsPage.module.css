@@ -6,6 +6,7 @@
   margin: 70px auto;
   max-width: 1000px;
   background-color: #f0f0f0;
+  padding: 10px;
 }
 
 .button {
@@ -19,7 +20,7 @@
   width: 100px;
   text-align: center;
   margin-bottom: 10px;
-  /* position: fixed; */
+  border: 2px solid orangered;
 }
 
 .button:hover {
@@ -33,6 +34,8 @@
   max-width: 1000px;
   width: 100%;
   align-items: flex-start;
+  margin-bottom: 20px;
+  align-items: stretch;
 }
 
 .moviePoster {
@@ -40,6 +43,7 @@
   height: auto;
   border-radius: 8px;
   min-width: 140px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dscr {
@@ -47,6 +51,10 @@
   flex-direction: column;
   max-width: 70%;
   gap: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
 }
 
 .nav {
@@ -74,4 +82,5 @@
   gap: 10px;
   align-items: center;
   text-align: center;
+  margin-bottom: 20px;
 }
