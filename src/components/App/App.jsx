@@ -7,21 +7,21 @@ import MovieDetailsPage from './../../pages/MovieDetailsPage/MovieDetailsPage';
 import NotFoundPage from './../../pages/NotFoundPage/NotFoundPage';
 import MovieCast from './../MovieCast/MovieCast';
 import MovieReviews from './../MovieReviews/MovieReviews';
-import AppBar from './../AppBar/AppBar';
+import Navigation from './../Navigation/Navigation';
 import css from './App.module.css';
 
 const App = () => {
-  const [movies, setMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [searchMovies, setSearchMovies] = useState([]);
   const [genres, setGenres] = useState([]);
-  // const [movieCast, setMovieCast] = useState([]);
   const [error, setError] = useState(null);
 
-  // Загружаем фильмы и жанры
+  // Фільми у тренді
   useEffect(() => {
     const loadMovies = async () => {
       try {
         const data = await fetchTrendingMovies();
-        setMovies(data);
+        setTrendingMovies(data);
       } catch (error) {
         setError(`Unable to load movies: ${error.message}`);
       }
@@ -30,6 +30,7 @@ const App = () => {
     loadMovies();
   }, []);
 
+  // Жанри фільмів
   useEffect(() => {
     const loadGenres = async () => {
       try {
@@ -45,14 +46,28 @@ const App = () => {
 
   return (
     <div className={css.container}>
-      <AppBar />
+      <Navigation />
       {error && <p className={css.error}>{error}</p>}
       <Routes>
-        <Route path="/" element={<HomePage movies={movies} />} />
-        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/" element={<HomePage movies={trendingMovies} />} />
+        <Route
+          path="/movies"
+          element={
+            <MoviesPage
+              setSearchMovies={setSearchMovies}
+              searchMovies={searchMovies}
+            />
+          }
+        />
         <Route
           path="/movies/:movieId"
-          element={<MovieDetailsPage movies={movies} genres={genres} />}
+          element={
+            <MovieDetailsPage
+              trendingMovies={trendingMovies}
+              searchMovies={searchMovies}
+              genres={genres}
+            />
+          }
         >
           <Route path="cast" element={<MovieCast />} />
           <Route path="reviews" element={<MovieReviews />} />

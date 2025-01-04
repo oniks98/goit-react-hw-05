@@ -1,13 +1,29 @@
-import { useParams, Link, Outlet, NavLink } from 'react-router-dom';
+import {
+  useParams,
+  Link,
+  Outlet,
+  NavLink,
+  useLocation,
+} from 'react-router-dom';
 import clsx from 'clsx';
 import css from './MovieDetailsPage.module.css';
 
-const MovieDetailsPage = ({ movies, genres }) => {
+const defaultImg =
+  'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
+
+const MovieDetailsPage = ({ trendingMovies, searchMovies, genres }) => {
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.link, isActive && css.active);
   };
+
   const { movieId } = useParams();
-  const movie = movies.find(movie => movie.id === Number(movieId));
+  const location = useLocation();
+  const backLink = location.state ?? '/movies';
+
+  const movie =
+    trendingMovies.find(movie => movie.id === Number(movieId)) ||
+    searchMovies.find(movie => movie.id === Number(movieId));
+  console.log(movie);
 
   if (!movie) {
     return <p>Movie not found</p>;
@@ -16,7 +32,7 @@ const MovieDetailsPage = ({ movies, genres }) => {
   return (
     <div className={css.container}>
       <nav className={css.nav}>
-        <Link to="/" className={css.link_button}>
+        <Link to={backLink} className={css.link_button}>
           <button type="button" className={css.button}>
             Go back
           </button>
@@ -24,13 +40,16 @@ const MovieDetailsPage = ({ movies, genres }) => {
       </nav>
 
       <div className={css.block_dscr}>
-        {movie.poster_path && (
-          <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
-            className={css.moviePoster}
-          />
-        )}
+        <img
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : defaultImg
+          }
+          alt={movie.title}
+          className={css.moviePoster}
+        />
+
         <div className={css.dscr}>
           <h2>
             {movie.title} ({movie.release_date})
@@ -68,13 +87,6 @@ const MovieDetailsPage = ({ movies, genres }) => {
         </li>
       </ul>
       <Outlet />
-      {/* <nav className={css.nav}>
-        <Link to="/" className={css.link_button}>
-          <button type="button" className={css.button}>
-            Go back
-          </button>
-        </Link>
-      </nav> */}
     </div>
   );
 };
