@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { fetchTrendingMovies, fetchGenresMovies } from '../../movielist-api';
+import { fetchTrendingMovies } from '../../movielist-api';
 import NotFoundPage from './../../pages/NotFoundPage/NotFoundPage';
 import Navigation from './../Navigation/Navigation';
 import { Toaster } from 'react-hot-toast';
@@ -18,7 +18,6 @@ const MovieReviews = lazy(() => import('./../MovieReviews/MovieReviews'));
 const App = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [searchMovies, setSearchMovies] = useState([]);
-  const [genres, setGenres] = useState([]);
   const [error, setError] = useState(null);
 
   // Фільми у тренді
@@ -33,20 +32,6 @@ const App = () => {
     };
 
     loadMovies();
-  }, []);
-
-  // Жанри фільмів
-  useEffect(() => {
-    const loadGenres = async () => {
-      try {
-        const data = await fetchGenresMovies();
-        setGenres(data);
-      } catch (error) {
-        setError(`Error fetching genres: ${error.message}`);
-      }
-    };
-
-    loadGenres();
   }, []);
 
   return (
@@ -75,7 +60,6 @@ const App = () => {
               <MovieDetailsPage
                 trendingMovies={trendingMovies}
                 searchMovies={searchMovies}
-                genres={genres}
               />
             }
           >
