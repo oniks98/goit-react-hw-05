@@ -7,24 +7,23 @@ import css from './MoviesPage.module.css';
 
 const MoviesPage = ({ searchMovies, setSearchMovies }) => {
   const [searchParams] = useSearchParams();
-  // const [searchMovies, setSearchMovies] = useState([]);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
+  const [isLoading, setIsLoading] = useState(false);
 
-  const query = searchParams.get('query'); // Получаем параметр запроса
+  const query = searchParams.get('query');
 
   useEffect(() => {
-    if (!query) return; // Если параметра нет, ничего не делаем
+    if (!query) return;
 
     const searchMovies = async () => {
-      setIsLoading(true); // Устанавливаем состояние загрузки
+      setIsLoading(true);
       try {
         const data = await fetchSearchMovies(query);
         setSearchMovies(data); // Оновлюємо стан у App
       } catch (error) {
         setError(`Unable to load movies: ${error.message}`);
       } finally {
-        setIsLoading(false); // Сбрасываем состояние загрузки
+        setIsLoading(false);
       }
     };
 
