@@ -9,10 +9,6 @@
   padding: 10px;
 }
 
-/* .message{
-
-} */
-
 .button {
   padding: 10px;
   border-radius: 4px;
@@ -25,6 +21,8 @@
   text-align: center;
   margin-bottom: 10px;
   border: 2px solid orangered;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
 }
 
 .button:hover {
@@ -43,7 +41,7 @@
 }
 
 .moviePoster {
-  max-width: 30%;
+  width: 30%;
   height: auto;
   border-radius: 8px;
   min-width: 140px;
@@ -53,7 +51,7 @@
 .dscr {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
+  width: 70%;
   gap: 24px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #f8f9fa;
@@ -74,6 +72,8 @@
   font-weight: 500;
   border: 2px solid orangered;
   width: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
 }
 
 .active {
@@ -87,4 +87,12 @@
   align-items: center;
   text-align: center;
   margin-bottom: 20px;
+}
+
+.subtitle {
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
 }

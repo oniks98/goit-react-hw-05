@@ -44,7 +44,7 @@ const MovieCast = () => {
 
   return (
     <div className={css.container}>
-      <h3>Movie Cast</h3>
+      <h3 className={css.subtitle}>Movie Cast</h3>
       <ul className={css.castList}>
         {movieCast.map(actor => (
           <li key={actor.cast_id} className={css.castItem}>

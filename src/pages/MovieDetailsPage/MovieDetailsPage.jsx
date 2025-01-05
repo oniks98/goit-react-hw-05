@@ -18,7 +18,9 @@ const MovieDetailsPage = ({ trendingMovies, searchMovies, genres }) => {
 
   const { movieId } = useParams();
   const location = useLocation();
-  const backLink = location.state ?? '/movies';
+  const backLink = location.state ?? '/movies'; // Используем state или дефолтное значение
+  console.log('Location state:', location.state);
+  console.log('BackLink:', backLink);
 
   const movie =
     trendingMovies.find(movie => movie.id === Number(movieId)) ||
@@ -68,19 +70,27 @@ const MovieDetailsPage = ({ trendingMovies, searchMovies, genres }) => {
           </p>
         </div>
       </div>
-      <h3>Additional information</h3>
+      <h3 className={css.subtitle}>Additional information</h3>
 
       <ul className={css.list}>
         <li>
           <nav className={css.nav}>
-            <NavLink to="cast" className={buildLinkClass}>
+            <NavLink
+              to="cast"
+              // state={{ from: location }} // Передаем текущий backLink
+              className={buildLinkClass}
+            >
               Cast
             </NavLink>
           </nav>
         </li>
         <li>
           <nav className={css.nav}>
-            <NavLink to="reviews" className={buildLinkClass}>
+            <NavLink
+              to="reviews"
+              // state={location} // Передаем текущий backLink
+              className={buildLinkClass}
+            >
               Reviews
             </NavLink>
           </nav>

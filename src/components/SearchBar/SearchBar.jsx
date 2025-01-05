@@ -11,18 +11,12 @@ const SearchBar = () => {
   const handleSearch = e => {
     e.preventDefault();
 
-    // Если поле ввода пустое, ничего не делаем
-    if (searchQuery.trim() === '') {
-      alert('Please enter a search query.');
-      return;
-    }
-
     if (searchQuery.trim() === '') {
       toast('Please enter a search query.');
       return;
     }
 
-    // Навигация на страницу с результатами поиска
+    // навігація на сторінку з результатами пошуку
     navigate(`/movies?query=${searchQuery}`);
   };
 

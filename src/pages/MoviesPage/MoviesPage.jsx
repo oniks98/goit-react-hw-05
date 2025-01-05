@@ -39,7 +39,7 @@ const MoviesPage = ({ searchMovies, setSearchMovies }) => {
       {error && <p className={css.error}>{error}</p>}
 
       {!isLoading && query && searchMovies.length === 0 ? (
-        <p>No movies found for query: {query}</p>
+        <p className={css.subtitle}>No movies found for query: {query}</p>
       ) : (
         <MovieList movies={searchMovies} />
       )}
