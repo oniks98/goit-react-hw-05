@@ -1,14 +1,19 @@
+import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchTrendingMovies, fetchGenresMovies } from '../../movielist-api';
-import HomePage from './../../pages/HomePage/HomePage';
-import MoviesPage from './../../pages/MoviesPage/MoviesPage';
-import MovieDetailsPage from './../../pages/MovieDetailsPage/MovieDetailsPage';
 import NotFoundPage from './../../pages/NotFoundPage/NotFoundPage';
-import MovieCast from './../MovieCast/MovieCast';
-import MovieReviews from './../MovieReviews/MovieReviews';
 import Navigation from './../Navigation/Navigation';
+import { Toaster } from 'react-hot-toast';
 import css from './App.module.css';
+
+const HomePage = lazy(() => import('./../../pages/HomePage/HomePage'));
+const MoviesPage = lazy(() => import('./../../pages/MoviesPage/MoviesPage'));
+const MovieDetailsPage = lazy(() =>
+  import('./../../pages/MovieDetailsPage/MovieDetailsPage')
+);
+const MovieCast = lazy(() => import('./../MovieCast/MovieCast'));
+const MovieReviews = lazy(() => import('./../MovieReviews/MovieReviews'));
 
 const App = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
@@ -47,34 +52,40 @@ const App = () => {
   return (
     <div className={css.container}>
       <Navigation />
+      <Toaster
+        position="top-center"
+        toastOptions={{ className: css.toasterContainer }}
+      />
       {error && <p className={css.error}>{error}</p>}
-      <Routes>
-        <Route path="/" element={<HomePage movies={trendingMovies} />} />
-        <Route
-          path="/movies"
-          element={
-            <MoviesPage
-              setSearchMovies={setSearchMovies}
-              searchMovies={searchMovies}
-            />
-          }
-        />
-        <Route
-          path="/movies/:movieId"
-          element={
-            <MovieDetailsPage
-              trendingMovies={trendingMovies}
-              searchMovies={searchMovies}
-              genres={genres}
-            />
-          }
-        >
-          <Route path="cast" element={<MovieCast />} />
-          <Route path="reviews" element={<MovieReviews />} />
-        </Route>
+      <Suspense fallback={<div>Loading page...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage movies={trendingMovies} />} />
+          <Route
+            path="/movies"
+            element={
+              <MoviesPage
+                setSearchMovies={setSearchMovies}
+                searchMovies={searchMovies}
+              />
+            }
+          />
+          <Route
+            path="/movies/:movieId"
+            element={
+              <MovieDetailsPage
+                trendingMovies={trendingMovies}
+                searchMovies={searchMovies}
+                genres={genres}
+              />
+            }
+          >
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 };
