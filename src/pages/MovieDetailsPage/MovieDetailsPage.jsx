@@ -17,6 +17,15 @@ const MovieDetailsPage = ({ trendingMovies, searchMovies }) => {
   const [genres, setGenres] = useState([]);
   const [error, setError] = useState(null);
 
+  const { movieId } = useParams();
+  console.log(movieId);
+  console.log(trendingMovies);
+  console.log(searchMovies);
+
+  const location = useLocation();
+  const backLink = location.state ?? '/movies';
+  console.log(backLink);
+
   useEffect(() => {
     const loadGenres = async () => {
       try {
@@ -34,16 +43,13 @@ const MovieDetailsPage = ({ trendingMovies, searchMovies }) => {
     return clsx(css.link, isActive && css.active);
   };
 
-  const { movieId } = useParams();
-  const location = useLocation();
-  const backLink = location.state ?? '/movies';
-
   const movie =
     trendingMovies.find(movie => movie.id === Number(movieId)) ||
     searchMovies.find(movie => movie.id === Number(movieId));
+  console.log(movie);
 
   if (!movie) {
-    return <p>Movie not found</p>;
+    return <p className={css.message}>Movie not found</p>;
   }
 
   return (
