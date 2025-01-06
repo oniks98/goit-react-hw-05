@@ -1,32 +1,26 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
 import toast from 'react-hot-toast';
 import css from './SearchBar.module.css';
 
-const SearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate();
-
+const SearchBar = ({ setSearchParams }) => {
   const handleSearch = e => {
     e.preventDefault();
+    const value = e.target.elements.query.value.trim();
 
-    if (searchQuery.trim() === '') {
-      toast('Please enter a search query.');
+    if (!value) {
+      toast.error('Please enter a search query.');
       return;
     }
 
-    // навігація на сторінку з результатами пошуку
-    navigate(`/movies?query=${searchQuery}`);
+    setSearchParams({ query: value });
   };
 
   return (
     <div className={css.container}>
       <form onSubmit={handleSearch} className={css.searchForm}>
         <input
+          name="query"
           type="text"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
           placeholder="Search for movies..."
           className={css.searchInput}
         />

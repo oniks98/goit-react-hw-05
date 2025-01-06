@@ -5,12 +5,12 @@ import MovieList from '../../components/MovieList/MovieList';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import css from './MoviesPage.module.css';
 
-const MoviesPage = ({ searchMovies, setSearchMovies }) => {
-  const [searchParams] = useSearchParams();
+const MoviesPage = () => {
+  const [searchMovies, setSearchMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const query = searchParams.get('query');
+  const query = searchParams.get('query') || '';
 
   useEffect(() => {
     if (!query) return;
@@ -19,7 +19,7 @@ const MoviesPage = ({ searchMovies, setSearchMovies }) => {
       setIsLoading(true);
       try {
         const data = await fetchSearchMovies(query);
-        setSearchMovies(data); // Оновлюємо стан у App
+        setSearchMovies(data);
       } catch (error) {
         setError(`Unable to load movies: ${error.message}`);
       } finally {
@@ -28,11 +28,11 @@ const MoviesPage = ({ searchMovies, setSearchMovies }) => {
     };
 
     searchMovies();
-  }, [query, setSearchMovies]);
+  }, [query]);
 
   return (
     <div className={css.container}>
-      <SearchBar />
+      <SearchBar setSearchParams={setSearchParams} />
       {isLoading && <p className={css.loading}>Loading...</p>}
 
       {error && <p className={css.error}>{error}</p>}
