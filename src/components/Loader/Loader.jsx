@@ -4,7 +4,12 @@ import css from './Loader.module.css';
 const Loader = () => {
   return (
     <div className={css.loaderContainer}>
-      <ThreeDots className={css.loader} ariaLabel="loading" visible={true} />
+      <ThreeDots
+        className={css.loader}
+        ariaLabel="loading"
+        visible={true}
+        color="orangered"
+      />
     </div>
   );
 };

@@ -12,9 +12,11 @@ const instance = axios.create({
   },
 });
 
-export const fetchTrendingMovies = async () => {
-  const { data } = await instance.get('/trending/movie/day');
-  return data.results;
+export const fetchTrendingMovies = async page => {
+  const { data } = await instance.get('/trending/movie/day', {
+    params: { page },
+  });
+  return { movies: data.results, totalPages: data.total_pages };
 };
 
 export const fetchSearchMovies = async query => {
