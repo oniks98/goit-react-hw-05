@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { fetchTrendingMovies } from '../../movielist-api';
 import MovieList from './../../components/MovieList/MovieList';
 import LoadMoreBtn from './../../components/LoadMoreBtn/LoadMoreBtn';
-import Loader from './../../components/Loader/Loader'; // Импортируем Loader
+import Loader from './../../components/Loader/Loader';
 import css from './HomePage.module.css';
 
 const HomePage = () => {
@@ -46,7 +46,7 @@ const HomePage = () => {
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',
       });
-    }, 100); // Небольшая задержка, чтобы контент успел отрендериться
+    }, 100);
   }
 
   const handleLoadMore = () => {
@@ -66,7 +66,7 @@ const HomePage = () => {
           {page < totalPages && (
             <>
               {isLoading ? (
-                <Loader /> // Показываем Loader вместо кнопки
+                <Loader />
               ) : (
                 <LoadMoreBtn onClick={handleLoadMore} />
               )}
