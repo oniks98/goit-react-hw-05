@@ -30,13 +30,6 @@ const HomePage = () => {
         if (page >= data.totalPages) {
           toast("We're sorry, but you've reached the end of search results.");
         }
-
-        setTimeout(() => {
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth',
-          });
-        }, 100); // Задержка для прокрутки после рендеринга
       } catch (error) {
         setError(`Unable to load movies: ${error.message}`);
       } finally {
@@ -46,6 +39,15 @@ const HomePage = () => {
 
     loadMovies();
   }, [page]);
+
+  if (page > 1) {
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 100); // Небольшая задержка, чтобы контент успел отрендериться
+  }
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);

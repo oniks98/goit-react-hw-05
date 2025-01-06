@@ -1,9 +1,9 @@
 .container {
   max-width: 1000px;
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   margin: 80px auto;
   padding: 10px;
-  min-height: 80vh;
+  /* min-height: 80vh; */
 }
 
 .title {
@@ -12,5 +12,5 @@
   text-align: center;
   background-color: #f8f9fa;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

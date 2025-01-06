@@ -5,6 +5,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  max-width: 1000px;
+  /* background-color: #f0f0f0; */
+  /* padding: 10px; */
 }
 
 .castList {
@@ -17,7 +20,7 @@
 .castItem {
   width: 196px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
 }
 
@@ -41,12 +44,13 @@
 }
 
 .subtitle {
+  width: 98%;
+  /* max-width: 980px; */
   border-radius: 8px;
   padding: 10px;
   background-color: #f8f9fa;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
-  width: 200px;
 }
 
 .message {
@@ -54,6 +58,6 @@
   border-radius: 8px;
   padding: 10px;
   background-color: #f8f9fa;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 10px;
 }

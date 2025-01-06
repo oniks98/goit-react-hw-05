@@ -36,13 +36,6 @@ const MoviesPage = () => {
         if (page >= data.totalPages) {
           toast("We're sorry, but you've reached the end of search results.");
         }
-
-        setTimeout(() => {
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth',
-          });
-        }, 100); // Задержка для прокрутки после рендеринга
       } catch (error) {
         setError(`Unable to load movies: ${error.message}`);
       } finally {
@@ -52,6 +45,15 @@ const MoviesPage = () => {
 
     searchMovies();
   }, [query, page]);
+
+  if (page > 1) {
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 100);
+  }
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);

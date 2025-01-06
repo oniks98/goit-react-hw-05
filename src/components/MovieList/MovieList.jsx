@@ -19,7 +19,7 @@ const MovieList = ({ movies }) => {
                 state={{ from: location }}
                 className={css.movieLink}
               >
-                <p>{title}</p>
+                <p className={css.name}>{title}</p>
               </Link>
             </h3>
           </li>

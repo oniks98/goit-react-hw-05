@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import Navigation from './../Navigation/Navigation';
 import { Toaster } from 'react-hot-toast';
+import ScrollToTopButton from './../ScrollToTopButton/ScrollToTopButton';
 import css from './App.module.css';
 
 const HomePage = lazy(() => import('./../../pages/HomePage/HomePage'));
@@ -42,6 +43,8 @@ const App = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
+
+      <ScrollToTopButton />
     </div>
   );
 };
