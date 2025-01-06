@@ -6,15 +6,15 @@ const MovieList = ({ movies }) => {
 
   return (
     <ul className={css.movieList}>
-      {movies.map(movie => (
-        <li key={movie.id} className={css.movieItem}>
+      {movies.map(({ id, title }) => (
+        <li key={id} className={css.movieItem}>
           <h3 className={css.subtitle}>
             <Link
-              to={`/movies/${movie.id}`}
-              state={location}
+              to={`/movies/${id}`}
+              state={{ from: location }}
               className={css.movieLink}
             >
-              {movie.title}
+              <p>{title}</p>
             </Link>
           </h3>
         </li>

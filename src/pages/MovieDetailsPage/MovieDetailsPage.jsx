@@ -1,52 +1,41 @@
+import { useEffect, useState, useRef } from 'react';
 import {
   useParams,
-  Link,
   Outlet,
-  NavLink,
   useLocation,
+  Link,
+  NavLink,
 } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { fetchMovieDetails } from '../../movielist-api';
 import clsx from 'clsx';
-import { fetchGenresMovies } from '../../movielist-api';
 import css from './MovieDetailsPage.module.css';
 
 const defaultImg =
   'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
-const MovieDetailsPage = ({ trendingMovies, searchMovies }) => {
-  const [genres, setGenres] = useState([]);
-  const [error, setError] = useState(null);
-
+const MovieDetailsPage = () => {
   const { movieId } = useParams();
-  console.log(movieId);
-  console.log(trendingMovies);
-  console.log(searchMovies);
-
+  const [movie, setMovie] = useState(null);
+  const [error, setError] = useState(null);
   const location = useLocation();
-  const backLink = location.state ?? '/movies';
-  console.log(backLink);
-
-  useEffect(() => {
-    const loadGenres = async () => {
-      try {
-        const data = await fetchGenresMovies();
-        setGenres(data);
-      } catch (error) {
-        setError(`Error fetching genres: ${error.message}`);
-      }
-    };
-
-    loadGenres();
-  }, []);
+  const backLink = useRef(location.state?.from ?? '/movies');
 
   const buildLinkClass = ({ isActive }) => {
     return clsx(css.link, isActive && css.active);
   };
 
-  const movie =
-    trendingMovies.find(movie => movie.id === Number(movieId)) ||
-    searchMovies.find(movie => movie.id === Number(movieId));
-  console.log(movie);
+  useEffect(() => {
+    const loadMovieDetails = async () => {
+      try {
+        const data = await fetchMovieDetails(movieId);
+        setMovie(data);
+      } catch (error) {
+        setError(`Error fetching genres: ${error.message}`);
+      }
+    };
+
+    loadMovieDetails();
+  }, [movieId]);
 
   if (!movie) {
     return <p className={css.message}>Movie not found</p>;
@@ -54,8 +43,9 @@ const MovieDetailsPage = ({ trendingMovies, searchMovies }) => {
 
   return (
     <div className={css.container}>
+      {error && <p className={css.error}>{error}</p>}
       <nav className={css.nav}>
-        <Link to={backLink} className={css.link_button}>
+        <Link to={backLink.current} className={css.link_button}>
           <button type="button" className={css.button}>
             Go back
           </button>
@@ -81,15 +71,7 @@ const MovieDetailsPage = ({ trendingMovies, searchMovies }) => {
           <h3>Overview</h3>
           <p>{movie.overview}</p>
           <h3>Genres</h3>
-          {error && <p className={css.error}>{error}</p>}
-          <p>
-            {movie.genre_ids
-              .map(genreId => {
-                const genre = genres.find(genre => genre.id === genreId);
-                return genre ? genre.name : null;
-              })
-              .join(', ')}
-          </p>
+          <p>{movie.genres.map(genre => genre.name).join(', ')}</p>
         </div>
       </div>
       <h3 className={css.subtitle}>Additional information</h3>
