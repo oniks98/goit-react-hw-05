@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 import { fetchMovieCast } from '../../movielist-api';
 import css from './MovieCast.module.css';
 
@@ -32,7 +33,11 @@ const MovieCast = () => {
 
   return (
     <div className={css.container}>
-      {isLoading && <p className={css.loading}>Loading...</p>}
+      {isLoading && (
+        <p className={css.loading}>
+          <Loader />
+        </p>
+      )}
 
       {error && <p className={css.error}>{error}</p>}
 

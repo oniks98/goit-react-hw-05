@@ -3,6 +3,7 @@
   background-color: #f0f0f0;
   margin: 80px auto;
   padding: 10px;
+  min-height: 80vh;
 }
 
 .title {

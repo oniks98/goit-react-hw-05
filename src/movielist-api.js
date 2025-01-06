@@ -19,11 +19,11 @@ export const fetchTrendingMovies = async page => {
   return { movies: data.results, totalPages: data.total_pages };
 };
 
-export const fetchSearchMovies = async query => {
+export const fetchSearchMovies = async (query, page) => {
   const { data } = await instance.get('/search/movie', {
-    params: { query, language: 'en-US' },
+    params: { query, page, language: 'en-US' },
   });
-  return data.results;
+  return { movies: data.results, totalPages: data.total_pages };
 };
 
 export const fetchMovieDetails = async movieId => {
