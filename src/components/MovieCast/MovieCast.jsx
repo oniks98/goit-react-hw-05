@@ -18,6 +18,7 @@ const MovieCast = () => {
 
     const loadMovieCast = async () => {
       setIsLoading(true);
+
       try {
         const data = await fetchMovieCast(movieId);
         setMovieCast(data);
@@ -34,9 +35,9 @@ const MovieCast = () => {
   return (
     <div className={css.container}>
       {isLoading && (
-        <p className={css.loading}>
+        <div className={css.loading}>
           <Loader />
-        </p>
+        </div>
       )}
 
       {error && <p className={css.error}>{error}</p>}

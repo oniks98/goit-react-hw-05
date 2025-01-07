@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import css from './SearchBar.module.css';
 
 const SearchBar = ({ setSearchParams }) => {
-  const handleSearch = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     const value = e.target.elements.query.value.trim();
 
@@ -17,7 +17,7 @@ const SearchBar = ({ setSearchParams }) => {
 
   return (
     <div className={css.container}>
-      <form onSubmit={handleSearch} className={css.searchForm}>
+      <form onSubmit={handleSubmit} className={css.searchForm}>
         <input
           name="query"
           type="text"

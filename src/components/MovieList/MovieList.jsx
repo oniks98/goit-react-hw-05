@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import shortid from 'shortid';
 import css from './MovieList.module.css';
 
 const MovieList = ({ movies }) => {
@@ -7,23 +6,19 @@ const MovieList = ({ movies }) => {
 
   return (
     <ul className={css.movieList}>
-      {movies.map(({ id, title }) => {
-        const uniqueKey = shortid.generate();
-
-        return (
-          <li key={uniqueKey} className={css.movieItem}>
-            <h3 className={css.subtitle}>
-              <Link
-                to={`/movies/${id}`}
-                state={{ from: location }}
-                className={css.movieLink}
-              >
-                <p className={css.name}>{title}</p>
-              </Link>
-            </h3>
-          </li>
-        );
-      })}
+      {movies.map(({ id, title }) => (
+        <li key={id} className={css.movieItem}>
+          <h3 className={css.subtitle}>
+            <Link
+              to={`/movies/${id}`}
+              state={{ from: location }}
+              className={css.movieLink}
+            >
+              {title}
+            </Link>
+          </h3>
+        </li>
+      ))}
     </ul>
   );
 };

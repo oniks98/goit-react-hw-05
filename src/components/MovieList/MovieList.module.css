@@ -27,6 +27,7 @@
   font-size: 16px;
   font-weight: 500;
   transition: color 0.3s ease;
+  padding: 5px;
 }
 
 .movieLink:hover {
@@ -38,6 +39,6 @@
   font-size: 24px;
   text-align: center;
 }
-.name {
+/* .name {
   padding: 5px;
-}
+} */

@@ -31,9 +31,9 @@ const MovieReviews = () => {
   return (
     <div className={css.container}>
       {isLoading && (
-        <p className={css.loading}>
+        <div className={css.loading}>
           <Loader />
-        </p>
+        </div>
       )}
 
       {error && <p className={css.error}>{error}</p>}

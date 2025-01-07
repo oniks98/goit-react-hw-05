@@ -63,9 +63,9 @@ const MoviesPage = () => {
     <div className={css.container}>
       <SearchBar setSearchParams={setSearchParams} />
       {isLoading && (
-        <p className={css.loading}>
+        <div className={css.loading}>
           <Loader />
-        </p>
+        </div>
       )}
 
       {error && <p className={css.error}>{error}</p>}
