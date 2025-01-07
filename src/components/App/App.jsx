@@ -1,8 +1,8 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Loader from '../Loader/Loader';
 import Navigation from './../Navigation/Navigation';
-import { Toaster } from 'react-hot-toast';
 import ScrollToTopButton from './../ScrollToTopButton/ScrollToTopButton';
 import css from './App.module.css';
 
@@ -26,13 +26,7 @@ const App = () => {
         toastOptions={{ className: css.toasterContainer }}
       />
 
-      <Suspense
-        fallback={
-          <div className={css.loading}>
-            <Loader />
-          </div>
-        }
-      >
+      <Suspense fallback={<Loader className={css.loading} />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<MoviesPage />} />
