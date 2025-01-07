@@ -40,14 +40,14 @@ const HomePage = () => {
     loadMovies();
   }, [page]);
 
-  if (page > 1) {
-    setTimeout(() => {
+  useEffect(() => {
+    if (page > 1) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',
       });
-    }, 100);
-  }
+    }
+  }, [trendingMovies, page]);
 
   const handleLoadMore = () => {
     setPage(prevPage => prevPage + 1);
