@@ -12,7 +12,6 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const page = Number(searchParams.get('page')) || 1;
 

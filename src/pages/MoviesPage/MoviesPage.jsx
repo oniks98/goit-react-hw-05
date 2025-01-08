@@ -13,7 +13,6 @@ const MoviesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  // const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const query = searchParams.get('query') || '';
   const page = Number(searchParams.get('page')) || 1;
