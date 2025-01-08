@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { fetchTrendingMovies } from '../../movielist-api';
 import MovieList from './../../components/MovieList/MovieList';
@@ -10,8 +11,10 @@ const HomePage = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  // const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const page = Number(searchParams.get('page')) || 1;
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -50,7 +53,11 @@ const HomePage = () => {
   }, [trendingMovies, page]);
 
   const handleLoadMore = () => {
-    setPage(prevPage => prevPage + 1);
+    setSearchParams(prevParams => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set('page', page + 1);
+      return newParams;
+    });
   };
 
   return (

@@ -12,7 +12,7 @@ const SearchBar = ({ setSearchParams }) => {
       return;
     }
 
-    setSearchParams({ query: value });
+    setSearchParams({ query: value, page: 1 });
   };
 
   return (
