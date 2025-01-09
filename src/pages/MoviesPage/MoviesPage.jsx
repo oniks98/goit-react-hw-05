@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom'; // Для роботи з параметрами URL
 import toast from 'react-hot-toast';
 import { fetchSearchMovies } from '../../movielist-api';
 import MovieList from '../../components/MovieList/MovieList';
@@ -9,14 +9,17 @@ import Loader from './../../components/Loader/Loader';
 import css from './MoviesPage.module.css';
 
 const MoviesPage = () => {
-  const [searchMovies, setSearchMovies] = useState([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchMovies, setSearchMovies] = useState([]); // Стан для списку фільмів, що знайдені
+  const [searchParams, setSearchParams] = useSearchParams(); // Параметри пошуку, отримані з URL
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
+
+  // Отримуємо параметри "query" та "page" з URL
   const query = searchParams.get('query') || '';
   const page = Number(searchParams.get('page')) || 1;
 
+  // Викликаємо функцію пошуку фільмів при зміні query або page
   useEffect(() => {
     if (!query) return;
 
@@ -25,13 +28,14 @@ const MoviesPage = () => {
       setError(null);
 
       try {
-        const data = await fetchSearchMovies(query, page);
+        const data = await fetchSearchMovies(query, page); // Запитуємо дані фільмів за допомогою fetchSearchMovies
 
+        // Оновлюємо список фільмів (скидаємо при першій сторінці)
         setSearchMovies(prevMovies =>
           page === 1 ? data.movies : [...prevMovies, ...data.movies]
         );
 
-        setTotalPages(data.totalPages);
+        setTotalPages(data.totalPages); // Оновлюємо загальну кількість сторінок
 
         if (page >= data.totalPages) {
           toast("We're sorry, but you've reached the end of search results.");
@@ -44,17 +48,19 @@ const MoviesPage = () => {
     };
 
     searchMovies();
-  }, [query, page]);
+  }, [query, page]); // Виконання ефекту залежить від зміни query або page
 
-  if (page > 1) {
-    setTimeout(() => {
+  // Якщо сторінка змінюється (і не перша), автоматично прокручуємо вниз
+  useEffect(() => {
+    if (page > 1) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',
       });
-    }, 100);
-  }
+    }
+  }, [searchMovies, page]);
 
+  // Функція для завантаження наступної сторінки
   const handleLoadMore = () => {
     setSearchParams(prevParams => {
       const newParams = new URLSearchParams(prevParams);
@@ -66,6 +72,8 @@ const MoviesPage = () => {
   return (
     <div className={css.container}>
       <SearchBar setSearchParams={setSearchParams} />
+
+      {/* Індикація завантаження */}
       {isLoading && (
         <div className={css.loading}>
           <Loader />
@@ -79,6 +87,8 @@ const MoviesPage = () => {
       ) : (
         <>
           <MovieList movies={searchMovies} />
+
+          {/* Кнопка для завантаження ще, якщо є більше сторінок */}
           {page < totalPages && (
             <>
               {isLoading ? (

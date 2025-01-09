@@ -1,43 +1,46 @@
 import { useEffect, useState, useRef } from 'react';
 import {
-  useParams,
-  Outlet,
-  useLocation,
-  Link,
-  NavLink,
+  useParams, // Хук для отримання параметрів з URL
+  Outlet, // Місце для вкладених маршрутів
+  useLocation, // Хук для отримання інформації про поточне місцезнаходження
+  Link, // Компонент для переходу за посиланням
+  NavLink, // Компонент для створення навігаційних посилань з активним станом
 } from 'react-router-dom';
 import { fetchMovieDetails } from '../../movielist-api';
 import Loader from './../../components/Loader/Loader';
-import clsx from 'clsx';
+import clsx from 'clsx'; // Бібліотека для динамічного об’єднання класів
 import css from './MovieDetailsPage.module.css';
 
+// URL-зображення за замовчуванням для фільмів без постера
 const defaultImg =
   'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
+// Функція для встановлення класу активного посилання
 const buildLinkClass = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
 };
 
 const MovieDetailsPage = () => {
-  const { movieId } = useParams();
-  const [movie, setMovie] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const location = useLocation();
-  const backLink = useRef(location.state?.from ?? '/movies');
+  const { movieId } = useParams(); // Отримуємо ідентифікатор фільму з URL
+  const [movie, setMovie] = useState(null); // Стан для збереження інформації про фільм
+  const [error, setError] = useState(null); // Стан для обробки помилок
+  const [isLoading, setIsLoading] = useState(false); // Стан для відображення завантаження
+  const location = useLocation(); // Отримуємо об’єкт з інформацією про поточне місцезнаходження
+  const backLink = useRef(location.state?.from ?? '/movies'); // Зберігаємо шлях для повернення
 
+  // Завантаження деталей фільму при зміні movieId
   useEffect(() => {
     const loadMovieDetails = async () => {
       setIsLoading(true);
 
       try {
-        const data = await fetchMovieDetails(movieId);
+        const data = await fetchMovieDetails(movieId); // Отримуємо дані фільму
         if (!data) throw new Error('Movie not found');
         setMovie(data);
       } catch (error) {
         setError(`Error fetching genres: ${error.message}`);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Завершення завантаження
       }
     };
 
@@ -54,6 +57,7 @@ const MovieDetailsPage = () => {
 
       {error && <p className={css.error}>{error}</p>}
 
+      {/* Кнопка для повернення назад */}
       <nav className={css.nav}>
         <Link to={backLink.current} className={css.link_button}>
           <button type="button" className={css.button}>
@@ -62,6 +66,7 @@ const MovieDetailsPage = () => {
         </Link>
       </nav>
 
+      {/* Відображення деталей фільму */}
       <div className={css.block_dscr}>
         {movie && (
           <div className={css.block_dscr}>
@@ -94,6 +99,7 @@ const MovieDetailsPage = () => {
 
       <h3 className={css.subtitle}>Additional information</h3>
 
+      {/* Навігаційні посилання для вкладених маршрутів */}
       <ul className={css.list}>
         <li>
           <nav className={css.nav}>
@@ -111,6 +117,7 @@ const MovieDetailsPage = () => {
         </li>
       </ul>
       <Outlet />
+      {/* Відображення вкладених маршрутів */}
     </div>
   );
 };

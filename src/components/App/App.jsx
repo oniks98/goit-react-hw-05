@@ -1,11 +1,12 @@
-import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
-import Loader from '../Loader/Loader';
-import Navigation from './../Navigation/Navigation';
-import ScrollToTopButton from './../ScrollToTopButton/ScrollToTopButton';
-import css from './App.module.css';
+import { Suspense, lazy } from 'react'; // Імпортуємо компоненти Suspense та lazy для динамічного завантаження компонентів
+import { Routes, Route } from 'react-router-dom'; // Імпортуємо компоненти для роботи з маршрутизацією
+import { Toaster } from 'react-hot-toast'; // Імпортуємо компонент для відображення повідомлень
+import Loader from '../Loader/Loader'; // Імпортуємо компонент завантаження
+import Navigation from './../Navigation/Navigation'; // Імпортуємо компонент навігації
+import ScrollToTopButton from './../ScrollToTopButton/ScrollToTopButton'; // Імпортуємо кнопку прокрутки до верху
+import css from './App.module.css'; // Імпортуємо стилі для компонента
 
+// Лінивий імпорт сторінок для маршрутизації
 const HomePage = lazy(() => import('./../../pages/HomePage/HomePage'));
 const MoviesPage = lazy(() => import('./../../pages/MoviesPage/MoviesPage'));
 const MovieDetailsPage = lazy(() =>
@@ -20,27 +21,31 @@ const NotFoundPage = lazy(() =>
 const App = () => {
   return (
     <div className={css.container}>
-      <Navigation />
+      <Navigation /> {/* Виводимо компонент навігації */}
       <Toaster
         position="top-center"
         toastOptions={{ className: css.toasterContainer }}
       />
-
       <Suspense fallback={<Loader className={css.loading} />}>
+        {/* Обгортка Suspense для завантаження компонентів */}
+
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviesPage />} />
-
+          {/* Маршрутизація для сторінок */}
+          <Route path="/" element={<HomePage />} /> {/* Головна сторінка */}
+          <Route path="/movies" element={<MoviesPage />} />{' '}
+          {/* Сторінка фільмів */}
+          {/* Маршрут для сторінки деталей фільму з вкладеними маршрутами */}
           <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-            <Route path="cast" element={<MovieCast />} />
-            <Route path="reviews" element={<MovieReviews />} />
+            <Route path="cast" element={<MovieCast />} />{' '}
+            {/* Вкладений маршрут для акторського складу */}
+            <Route path="reviews" element={<MovieReviews />} />{' '}
+            {/* Вкладений маршрут для оглядів */}
           </Route>
-
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFoundPage />} />{' '}
+          {/* Маршрут для сторінки 404, якщо сторінку не знайдено */}
         </Routes>
       </Suspense>
-
-      <ScrollToTopButton />
+      <ScrollToTopButton /> {/* Кнопка для прокрутки до верху сторінки */}
     </div>
   );
 };

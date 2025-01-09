@@ -5,14 +5,15 @@ import { fetchMovieReviews } from '../../movielist-api';
 import css from './MovieReviews.module.css';
 
 const MovieReviews = () => {
-  const { movieId } = useParams();
-  const [movieReviews, setMovieReviews] = useState([]);
+  const { movieId } = useParams(); // Отримуємо ID фільму з URL
+  const [movieReviews, setMovieReviews] = useState([]); // Стан для збереження відгуків
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!movieId) return;
 
+    // Асинхронна функція для завантаження відгуків
     const loadMovieReviews = async () => {
       setIsLoading(true);
       try {
@@ -26,10 +27,11 @@ const MovieReviews = () => {
     };
 
     loadMovieReviews();
-  }, [movieId]);
+  }, [movieId]); // Ефект виконується при зміні movieId
 
   return (
     <div className={css.container}>
+      {/* Відображаємо індикатор завантаження */}
       {isLoading && (
         <div className={css.loading}>
           <Loader />
@@ -42,6 +44,7 @@ const MovieReviews = () => {
         <p className={css.message}>We do not have any reviews for this movie</p>
       )}
 
+      {/* Якщо відгуки є, відображаємо їх список */}
       {!isLoading && !error && movieReviews.length > 0 && (
         <>
           <h3 className={css.subtitle}>Reviews: </h3>

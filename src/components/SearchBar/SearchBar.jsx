@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import css from './SearchBar.module.css';
 
 const SearchBar = ({ setSearchParams }) => {
+  // Функція для обробки події сабміту форми
   const handleSubmit = e => {
     e.preventDefault();
     const value = e.target.elements.query.value.trim();
@@ -12,11 +13,12 @@ const SearchBar = ({ setSearchParams }) => {
       return;
     }
 
-    setSearchParams({ query: value, page: 1 });
+    setSearchParams({ query: value, page: 1 }); // Оновлюємо параметри пошуку за допомогою функції setSearchParams
   };
 
   return (
     <div className={css.container}>
+      {/* Форма для пошуку з подією сабміту, обробленою handleSubmit */}
       <form onSubmit={handleSubmit} className={css.searchForm}>
         <input
           name="query"
