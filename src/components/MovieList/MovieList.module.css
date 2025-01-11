@@ -1,8 +1,10 @@
 .movieList {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: stretch;
 }
 
 .movieItem {
@@ -13,6 +15,7 @@
   width: 80%;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 196px;
 }
 
 .movieItem:hover {
@@ -28,6 +31,7 @@
   font-weight: 500;
   transition: color 0.3s ease;
   padding: 5px;
+  height: 100%;
 }
 
 .movieLink:hover {
@@ -39,6 +43,9 @@
   font-size: 24px;
   text-align: center;
 }
-/* .name {
-  padding: 5px;
-} */
+
+.moviePoster {
+  width: 196px;
+  height: 300px;
+  object-fit: cover;
+}
